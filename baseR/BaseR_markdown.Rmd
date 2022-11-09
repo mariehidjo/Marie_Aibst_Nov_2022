@@ -1,0 +1,108 @@
+---
+title: "Marie Hidjo"
+author: "Marie"
+date: "2022-11-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Application reading data
+
+```{r}
+data <- readRDS("my_day2matrix.rds")
+data
+```
+
+#Row, col and mean sum
+
+```{r}
+rowSums(data)
+```
+
+```{r}
+rowMeans(data)
+```
+#add row and means sum to this dataset
+```{r}
+data_2<- cbind(data, 
+               rowSums=rowSums(data), 
+               rowMeans=rowMeans(data))
+data_2
+```
+#Load the ToothGrowth dataset using data(ToothGrowth)
+
+```{r}
+data("ToothGrowth")
+summary(ToothGrowth)
+head(ToothGrowth)
+```
+
+#Descriptive stats Toothgrowth
+
+```{r}
+colnames(ToothGrowth)
+mean(ToothGrowth$len)
+max(ToothGrowth$len)
+min(ToothGrowth$len)
+```
+# Calculate rowSumS and rowMeans
+
+```{r}
+#This function does not work because the data set is a mixture of characters and numeric
+rowSums("ToothGrowth")
+```
+
+# Exercise 6: Writing a function
+
+
+```{r}
+hypotenuse<- function(a,b){
+  hypo<-sqrt(a**2 + b**2) 
+  return(hypo)}
+hypotenuse(2,4)
+```
+
+
+# Exercise 7: Apply
+
+```{r}
+a<- c(1:10)
+square<- function(y) {
+  sq=y^2
+  return(sq)
+}
+```
+
+#lapply
+
+```{r}
+lapply(a,square)
+```
+
+#sapply
+
+```{r}
+sapply(a, square)
+```
+#List of lengh 4
+
+```{r}
+x<- c(1:4)
+b<- c(F,F,T,T)
+c<- seq(1,20,2)
+d<- c(1:10)
+my_list<- list(x,b,c,d)
+lapply(my_list, sum)
+sapply(my_list, sum)
+```
+#rep function
+```{r}
+New_list<-sapply(my_list, rep, each=3)
+New_list
+```
+
