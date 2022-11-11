@@ -104,6 +104,7 @@ ggplot(diamonds, aes(x = carat, y = price, colour = cut)) +
 ```{r}
 ggplot(diamonds, aes(x = carat, y = price)) +
   geom_smooth()
+obds_diamionds
 ```
 
 
@@ -165,7 +166,7 @@ ggplot(ChickWeight, aes(x=Time , y=weight, color=Diet))+
 
 obds_chickweight <- ggplot(ChickWeight, aes(x=Time , y=weight, color=Diet))+
   geom_point()+ facet_wrap(~Diet, nrow=2)
-
+obds_chickweight
 
 ```
 
@@ -326,7 +327,7 @@ obds_msleep <- ggplot(ggplot2::msleep, aes(x = order))+
   theme(legend.key.size = unit(2, "mm"))+
   guides(fill = guide_legend(ncol = 3))
 
-
+obds_msleep
 
 ```
 
@@ -342,17 +343,15 @@ obds_msleep <- ggplot(ggplot2::msleep, aes(x = order))+
 
 Using `cowplot`.
 
-```{r, fig.height=12, fig.width=12}
+```{r, fig.height=6, fig.width=6}
 library(cowplot)
-first_row <- cowplot::plot_grid(
-  
-  
-)
-second_row <- cowplot::plot_grid(
+first_row <- cowplot::plot_grid(obds_chickweight,obds_diamionds, nrow = 1
   
 )
-super_plot <- cowplot::plot_grid(
+second_row <- cowplot::plot_grid(obds_msleep, nrow = 1
   
+)
+super_plot <- cowplot::plot_grid(first_row, second_row, nrow = 2
   
 )
 super_plot
@@ -360,18 +359,20 @@ super_plot
 
 Using `patchwork`.
 
-```{r, fig.height=12, fig.width=12}
+```{r, fig.height=9, fig.width=12}
 library(patchwork)
+
+(obds_chickweight + obds_diamionds) / (obds_msleep)
+
+
 
 ```
 
 Using `gridExtra`.
 
-```{r, fig.height=12, fig.width=12}
+```{r, fig.height=6, fig.width=9}
 library(gridExtra)
-
-
-
+gridExtra::grid.arrange(obds_chickweight, obds_diamionds,obds_msleep, ncol = 3, nrow = 2)
 
 
 ```
@@ -381,7 +382,12 @@ library(gridExtra)
 You will likely need a few attempts to fine-tune the width and height of the output file.
 
 ```{r}
-ggsave(   )
+ggsave(
+ "ggplot_final.pdf",
+ plot=super_plot,
+)
+
+
 ```
 
 # Exercise
